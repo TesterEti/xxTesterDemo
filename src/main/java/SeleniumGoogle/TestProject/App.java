@@ -1,10 +1,12 @@
 package SeleniumGoogle.TestProject;
 
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 
 /**
  * Hello world!
@@ -15,16 +17,30 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-       // FirefoxDriver driver = new FirefoxDriver();
         System.setProperty("webdriver.chrome.driver", "C:/Users/etigupta/workspace/TestProject/chromedriver.exe");
         ChromeDriver driver = new ChromeDriver();
       //Maximize window
-      //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get("http://www.google.com");
         WebElement searchbox = driver.findElementByCssSelector("#lst-ib");
         searchbox.sendKeys("word of the day");
-        WebElement searchresult = driver.findElementByCssSelector("#ires>div>div:nth-child(1)>div:nth-child(2)>div>.r>a");
-        searchresult.click();
+        List<WebElement> searchresult = driver.findElementsByCssSelector(".r");
+        for (WebElement result : searchresult) 
+        {
+        	Assert.assertEquals(result, "Merriam-Webster");
+        }
+        //WebElement searchresult = driver.findElementByCssSelector("#ires>div>div:nth-child(1)>div:nth-child(1)>div>.r>a");
+        //searchresult.click();
+        //Collecting all list elements
+        List<WebElement> allList = driver.findElementsByCssSelector(".more-wod-items>li>h2>a");
+        for (WebElement option : allList) 
+        {
+        	//collecting WebElement values
+        	String atext = option.getText();
+        	System.out.println("list is here: "+ atext);
+        }
+        
+        
     }
 }
