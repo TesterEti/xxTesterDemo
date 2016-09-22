@@ -25,10 +25,14 @@ public class App
         driver.get("http://www.google.com");
         WebElement searchbox = driver.findElementByCssSelector("#lst-ib");
         searchbox.sendKeys("word of the day");
-        List<WebElement> searchresult = driver.findElementsByCssSelector(".r");
-        for (WebElement result : searchresult) 
+        List<WebElement> searchresult1 = driver.findElementsByCssSelector(".r");
+        for (WebElement result : searchresult1) 
         {
-        	Assert.assertEquals(result, "Merriam-Webster");
+        	String a = result.getText();
+        	if  (a == "Merriam-Webster")
+        		{
+        			a.click();
+        		}
         }
         //WebElement searchresult = driver.findElementByCssSelector("#ires>div>div:nth-child(1)>div:nth-child(1)>div>.r>a");
         //searchresult.click();
